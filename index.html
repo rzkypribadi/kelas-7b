@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelas 7B - Tahun Ajaran 2024/2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --text: #495057;
+            --gold: #ffd700;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        /* Status Indicators */
+        .status-indicators {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 1001;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 10px 15px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            color: white;
+            transition: all 0.5s ease;
+        }
+        
+        body.scrolled .status-indicators {
+            background: white;
+            color: var(--dark);
+        }
+        
+        .battery-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .battery-icon {
+            width: 25px;
+            height: 12px;
+            border: 2px solid white;
+            border-radius: 3px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        body.scrolled .battery-icon {
+            border-color: var(--dark);
+        }
+        
+        .battery-level {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: white;
+            transition: width 0.5s ease;
+        }
+        
+        body.scrolled .battery-level {
+            background: var(--primary);
+        }
+        
+        .battery-percent {
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .date-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .day {
+            font-weight: 600;
+            font-size: 12px;
+        }
+        
+        .date {
+            font-size: 12px;
+        }
+
+        /* Preloader */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        
+        .preloader.fade-out {
+            opacity: 0;
+        }
+        
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Header Styles */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 L0,100 Z" /></svg>');
+            background-size: 50px 50px;
+            opacity: 0.3;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            font-weight: 800;
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease 0.3s both;
+            font-weight: 300;
+        }
+        
+        .class-motto {
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease 0.6s both;
+            font-style: italic;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: white;
+            color: var(--primary);
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.4s ease;
+            animation: fadeIn 1s ease 0.9s both;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            background: var(--accent);
+            color: white;
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 1.5rem;
+            animation: bounce 2s infinite;
+            z-index: 3;
+            cursor: pointer;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-20px) translateX(-50%); }
+            60% { transform: translateY(-10px) translateX(-50%); }
+        }
+        
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 25px 0;
+            z-index: 1000;
+            transition: all 0.4s ease;
+        }
+        
+        .nav.scrolled {
+            background: white;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.1);
+            padding: 15px 0;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: max-content;
+        }
+        
+        .nav.scrolled .logo {
+            color: var(--primary);
+        }
+        
+        .logo-icon {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin-left: auto;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+            position: relative;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        
+        .nav.scrolled .nav-links a {
+            color: var(--dark);
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin-left: auto;
+        }
+        
+        .nav.scrolled .mobile-menu-btn {
+            color: var(--primary);
+        }
+        
+        /* Section Styles */
+        .section {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: var(--primary);
+            font-size: 2.8rem;
+            font-weight: 700;
+        }
+        
+        .section-title p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--text);
+            font-size: 1.1rem;
+            position: relative;
+        }
+        
+        .section-title p::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 3px;
+        }
+        
+        /* About Section */
+        .about-content {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-text h3 {
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+        
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 25px 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: var(--text);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 30px 50px rgba(0,0,0,0.15);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.8s ease;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+        }
+        
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* Gallery Section */
+        .gallery {
+            background: #f5f7fa;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            aspect-ratio: 16/9;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 30px 20px 20px;
+            transform: translateY(100%);
+            transition: all 0.4s ease;
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        
+        .gallery-caption h3 {
+            margin-bottom: 5px;
+            font-size: 1.3rem;
+        }
+        
+        .gallery-caption p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        /* Students Section */
+        .students-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+        
+        /* Updated Wali Kelas Photo Section */
+        .wali-kelas-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .wali-kelas-photo-container {
+            width: 100%;
+            height: auto;
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            aspect-ratio: 16/9;
+        }
+        
+        .wali-kelas-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .wali-kelas-photo-container::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 25%;
+            background: linear-gradient(to top, var(--primary) 0%, transparent 100%);
+            mix-blend-mode: multiply;
+        }
+        
+        .wali-kelas-info {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 400px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .wali-kelas-info .social-links {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .wali-kelas-info .social-links a {
+            color: var(--primary);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .wali-kelas-info .social-links a:hover {
+            color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .class-list {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        
+        .class-list h3 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+        
+        .students-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .student-name {
+            background: linear-gradient(135deg, #f5f7fa, #e4e8f0);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .student-name::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+        }
+        
+        .student-name:hover {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .student-name:hover::before {
+            background: white;
+        }
+        
+        /* Memories Section */
+        .memories {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .memories .section-title h2,
+        .memories .section-title p {
+            color: white;
+        }
+        
+        .memories .section-title p::after {
+            background: rgba(255,255,255,0.5);
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: rgba(255,255,255,0.3);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+        
+        .memory-item {
+            padding: 15px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .memory-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: white;
+            border: 4px solid var(--accent);
+            border-radius: 50%;
+            top: 20px;
+            z-index: 1;
+        }
+        
+        .left {
+            left: 0;
+        }
+        
+        .right {
+            left: 50%;
+        }
+        
+        .left::after {
+            right: -12px;
+        }
+        
+        .right::after {
+            left: -12px;
+        }
+        
+        .memory-content {
+            padding: 25px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+        }
+        
+        .memory-item:hover .memory-content {
+            transform: scale(1.03);
+        }
+        
+        .memory-content h3 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .memory-date {
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: block;
+            font-size: 0.9rem;
+        }
+        
+        /* Messages Section */
+        .messages-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+        
+        .message-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        
+        .message-card::before {
+            content: '"';
+            position: absolute;
+            font-size: 6rem;
+            color: rgba(67, 97, 238, 0.05);
+            top: 10px;
+            left: 30px;
+            line-height: 1;
+        }
+        
+        .message-text {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #555;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+            line-height: 1.8;
+        }
+        
+        .message-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .message-author img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 20px;
+            border: 3px solid var(--light);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .author-info h4 {
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+        
+        .author-info p {
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        /* Contact Section - Simplified */
+        .contact {
+            background: #f5f7fa;
+        }
+        
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            text-align: center;
+        }
+        
+        .contact-info {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            display: inline-block;
+            text-align: left;
+        }
+        
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: var(--primary);
+            text-align: center;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+        
+        .info-icon {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-right: 20px;
+            margin-top: 5px;
+        }
+        
+        .info-content h4 {
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+        
+        .info-content p {
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 80px 0 30px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+        
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: white;
+            display: inline-block;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            gap: 20px;
+        }
+        
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            gap: 15px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border-radius: 50%;
+            transition: all 0.4s ease;
+        }
+        
+        .social-icons a:hover {
+            background: var(--accent);
+            transform: translateY(-5px);
+        }
+        
+        .creator-info {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .creator-info a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.2rem;
+        }
+        
+        .creator-info a:hover {
+            color: var(--accent);
+        }
+        
+        .creator-info i {
+            font-size: 1.8rem;
+        }
+        
+        .copyright {
+            color: #777;
+            font-size: 0.9rem;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            z-index: 999;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 80px 30px 30px;
+                box-shadow: -5px 0 30px rgba(0,0,0,0.1);
+                transition: right 0.4s ease;
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-links li {
+                margin: 0 0 20px 0;
+                width: 100%;
+            }
+            
+            .nav-links a {
+                color: var(--dark);
+                font-size: 1.1rem;
+                padding: 10px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .memory-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .memory-item::after {
+                left: 18px;
+            }
+            
+            .left::after, .right::after {
+                left: 18px;
+            }
+            
+            .right {
+                left: 0;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-image {
+                order: -1;
+            }
+            
+            .students-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .status-indicators {
+                top: 15px;
+                left: 15px;
+                padding: 8px 12px;
+            }
+            
+            .logo {
+                position: static;
+                transform: none;
+                margin: 0 auto 15px;
+                display: block;
+                width: max-content;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section {
+                padding: 70px 0;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .status-indicators {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .mobile-menu-btn {
+                position: absolute;
+                right: 30px;
+                top: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Status Indicators -->
+    <div class="status-indicators">
+        <div class="battery-indicator">
+            <div class="battery-icon">
+                <div class="battery-level" id="battery-level"></div>
+            </div>
+            <span class="battery-percent" id="battery-percent">--%</span>
+        </div>
+        <div class="date-container">
+            <span class="day" id="current-day">--</span>
+            <span class="date" id="current-date">--/--/----</span>
+        </div>
+    </div>
+
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="loader"></div>
+        <p>Loading...</p>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-graduation-cap logo-icon"></i>
+                Kelas 7B
+            </a>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">Tentang</a></li>
+                <li><a href="#gallery">Galeri</a></li>
+                <li><a href="#students">Anggota</a></li>
+                <li><a href="#memories">Kenangan</a></li>
+                <li><a href="#messages">Pesan</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Kenangan Kelas 7B</h1>
+            <p>Mengabadikan setiap momen berharga selama tahun ajaran 2024/2025</p>
+            <p class="class-motto">"Bersatu dalam kebersamaan, kuat dalam perbedaan"</p>
+            <a href="#about" class="btn">Mulai Jelajahi</a>
+        </div>
+        <div class="scroll-down" onclick="document.querySelector('#about').scrollIntoView({ behavior: 'smooth' })">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section" id="about">
+        <div class="section-title">
+            <h2>Tentang Kami</h2>
+            <p>Keluarga kecil yang penuh warna dengan berbagai karakter unik</p>
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Kelas 7B</h3>
+                <p>Kami adalah Kelas 7B yang terdiri dari 34 siswa dengan berbagai karakter dan bakat unik. Selama satu tahun bersama, kami telah melalui banyak momen berharga yang mengubah kami menjadi sebuah keluarga.</p>
+                <p>Dari hari pertama masuk dengan wajah-wajah baru yang masih asing, hingga sekarang yang sudah seperti saudara. Dari tugas-tugas yang menumpuk, sampai kegiatan seru bersama. Dari kesalahan kecil, sampai prestasi yang membanggakan.</p>
+                <p>Wali kelas kami, Bu Reza, telah membimbing dengan penuh kesabaran dan kasih sayang. Terima kasih untuk semua dukungan dan nasihat berharga yang telah diberikan.</p>
+                
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">34</div>
+                        <div class="stat-label">Siswa</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">1</div>
+                        <div class="stat-label">Keluarga</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100+</div>
+                        <div class="stat-label">Kenangan</div>
+                    </div>
+                </div>
+            </div>
+            <div class="about-image">
+                <img src="https://img1.pixhost.to/images/6574/612320064_skyzo.jpg" alt="Foto Kelas 7B">
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="section gallery" id="gallery">
+        <div class="section-title">
+            <h2>Galeri Kenangan</h2>
+            <p>Momen-momen berharga kami selama 1 tahun ini</p>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="https://img1.pixhost.to/images/6573/612306687_skyzo.jpg" alt="Baru Masuk 7B">
+                <div class="gallery-caption">
+                    <h3>Baru Masuk 7B</h3>
+                    <p>Momen pertama kami masuk kelas 7B</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://img1.pixhost.to/images/6573/612306473_skyzo.jpg" alt="17 Agustus">
+                <div class="gallery-caption">
+                    <h3>17 Agustus</h3>
+                    <p>Semangat kemerdekaan di sekolah</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://img1.pixhost.to/images/6573/612306388_skyzo.jpg" alt="Hari Batik Nasional">
+                <div class="gallery-caption">
+                    <h3>Hari Batik Nasional</h3>
+                    <p>Penghargaan untuk budaya Indonesia</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://img1.pixhost.to/images/6573/612306571_skyzo.jpg" alt="Baju Adat">
+                <div class="gallery-caption">
+                    <h3>Baju Adat</h3>
+                    <p>Merayakan kekayaan budaya Indonesia</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://img1.pixhost.to/images/6573/612307411_skyzo.jpg" alt="Classmeet">
+                <div class="gallery-caption">
+                    <h3>Classmeet</h3>
+                    <p>Kompetisi seru antar kelas</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://img1.pixhost.to/images/6574/612321557_skyzo.jpg" alt="Foto Sekelas">
+                <div class="gallery-caption">
+                    <h3>Foto Sekelas</h3>
+                    <p>Kenangan yang akan kami bawa selamanya</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Students Section -->
+    <section class="section" id="students">
+        <div class="section-title">
+            <h2>Anggota Kelas</h2>
+            <p>Keluarga besar Kelas 7B</p>
+        </div>
+        <div class="students-container">
+            <!-- Wali Kelas - Foto dipindah ke luar card -->
+            <div class="wali-kelas-container">
+                <div class="wali-kelas-photo-container">
+                    <img src="https://img1.pixhost.to/images/6571/612293340_skyzo.jpg" alt="Bu Reza" class="wali-kelas-photo">
+                </div>
+                <div class="wali-kelas-info">
+                    <h3>Bu Reza Febriantika</h3>
+                    <p>Wali Kelas 7B</p>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/reza.febriant" target="_blank"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="class-list">
+                <h3>Daftar Siswa Kelas 7B</h3>
+                <div class="students-grid">
+                    <div class="student-name">ALFA RIDHO INZAKY</div>
+                    <div class="student-name">ALZEINA SHATARA FAHMI</div>
+                    <div class="student-name">ANANDA LESTARI</div>
+                    <div class="student-name">ANDIEN NUR MAY CEELL</div>
+                    <div class="student-name">ARIFIN ILHAM RIFAIS</div>
+                    <div class="student-name">ARINI SASAL BINA</div>
+                    <div class="student-name">ARTA PUWAN MAHARANI</div>
+                    <div class="student-name">ASHIFA NUR AIINI</div>
+                    <div class="student-name">ASYIFA SABRIENA PUTRI</div>
+                    <div class="student-name">AZZAM HAFIDZ AL ARSYAD</div>
+                    <div class="student-name">BILQYS ZHAVARANY MAULANA</div>
+                    <div class="student-name">DAFFA KHAIRUL AZZAM</div>
+                    <div class="student-name">FEBI LIYANA</div>
+                    <div class="student-name">FIONA RAHMA HAYUNING DIYAH</div>
+                    <div class="student-name">KEYLA PUTRI DEHALOVA</div>
+                    <div class="student-name">KHANZA OKTAVIA</div>
+                    <div class="student-name">MELATI AYUNDARI</div>
+                    <div class="student-name">MEYRA JINGGA KIRANA</div>
+                    <div class="student-name">MUHAMAD NIZAM ABQARI</div>
+                    <div class="student-name">MUHAMMAD DWIKI JUNIYOR</div>
+                    <div class="student-name">NAILAH ZAHRO DZAKIROH</div>
+                    <div class="student-name">NAJLAA LEILA CHANDRAWATI</div>
+                    <div class="student-name">NIRMALA ZAILIYA</div>
+                    <div class="student-name">PUTRI NILAM CHYA</div>
+                    <div class="student-name">QURROTA AYUN WILAN RAMADHANI</div>
+                    <div class="student-name">RADIATIAN BASGIE</div>
+                    <div class="student-name">RIZKY IRAWAN</div>
+                    <div class="student-name">RIZKYNIA TRISUADI</div>
+                    <div class="student-name">SESYA MEDICA LIRIZ ANJANI Z</div>
+                    <div class="student-name">VANESA INDRI YANI</div>
+                    <div class="student-name">WINA ARUM WIJAYANTI</div>
+                    <div class="student-name">ZAHRA ANDINA FITRIA</div>
+                    <div class="student-name">ZAQIYA NAURI IZZATUNNISA</div>
+                    <div class="student-name">ZILDA SAFIRA</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Memories Section -->
+    <section class="section memories" id="memories">
+        <div class="section-title">
+            <h2>Kenangan</h2>
+            <p>Perjalanan indah kami selama satu tahun bersama</p>
+        </div>
+        <div class="timeline">
+            <!-- Memory 1 -->
+            <div class="memory-item left">
+                <div class="memory-content">
+                    <span class="memory-date">Juli 2024</span>
+                    <h3>Hari Pertama Masuk</h3>
+                    <p>Momen pertama kami masuk kelas 7B. Wajah-wajah baru yang masih canggung satu sama lain, tapi penuh semangat untuk memulai tahun ajaran baru.</p>
+                </div>
+            </div>
+            
+            <!-- Memory 2 -->
+            <div class="memory-item right">
+                <div class="memory-content">
+                    <span class="memory-date">Agustus 2024</span>
+                    <h3>Perayaan 17 Agustus</h3>
+                    <p>Kami mengikuti berbagai lomba kemerdekaan dengan semangat. Meski tidak selalu menang, kebersamaan yang tercipta sangat berharga.</p>
+                </div>
+            </div>
+            
+            <!-- Memory 3 -->
+            <div class="memory-item left">
+                <div class="memory-content">
+                    <span class="memory-date">November 2024</span>
+                    <h3>Hari Guru Nasional</h3>
+                    <p>Kami menyiapkan kejutan spesial untuk Bu Reza dan guru-guru lainnya. Melihat senyum bahagia mereka membuat semua persiapan terbayar.</p>
+                </div>
+            </div>
+            
+            <!-- Memory 4 -->
+            <div class="memory-item right">
+                <div class="memory-content">
+                    <span class="memory-date">Juni 2025</span>
+                    <h3>Classmeet</h3>
+                    <p>Kompetisi seru antar kelas dimana kami menunjukkan solidaritas dan kerja sama tim. Suasana kompetitif tapi tetap penuh kekeluargaan.</p>
+                </div>
+            </div>
+            
+            <!-- Memory 5 -->
+            <div class="memory-item left">
+                <div class="memory-content">
+                    <span class="memory-date">Juni 2025</span>
+                    <h3>Foto Kelas</h3>
+                    <p>Sesi foto bersama untuk mengabadikan kenangan sebelum naik ke kelas 8. Wajah-wajah yang sudah begitu akrab dan penuh kebersamaan.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Messages Section -->
+    <section class="section" id="messages">
+        <div class="section-title">
+            <h2>Pesan dan Kesan</h2>
+            <p>Ucapan hati dari kami untuk kenangan yang telah tercipta</p>
+        </div>
+        <div class="messages-container">
+            <!-- Message 1 -->
+            <div class="message-card">
+                <p class="message-text">Sebagai wali kelas 7B, saya sangat bangga dengan perkembangan kalian selama satu tahun ini. Dari sekumpulan individu dengan karakter berbeda, kalian telah tumbuh menjadi sebuah tim yang solid. Teruslah menjaga semangat belajar dan kebersamaan ini!</p>
+                <div class="message-author">
+                    <img src="https://img1.pixhost.to/images/6572/612298848_skyzo.jpg" alt="Bu Reza">
+                    <div class="author-info">
+                        <h4>Bu Reza</h4>
+                        <p>Wali Kelas 7B</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Message 2 -->
+            <div class="message-card">
+                <p class="message-text">Tahun ini sungguh luar biasa! Sebagai ketua kelas, saya belajar banyak tentang kepemimpinan dan kerja sama. Terima kasih untuk dukungan semua teman-teman. Kalian membuat tugas sebagai ketua kelas menjadi menyenangkan.</p>
+                <div class="message-author">
+                    <img src="https://img1.pixhost.to/images/6572/612298933_skyzo.jpg" alt="Ketua Kelas">
+                    <div class="author-info">
+                        <h4>Ketua Kelas</h4>
+                        <p>Kelas 7B</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Message 3 -->
+            <div class="message-card">
+                <p class="message-text">Awalnya saya ragu bisa bekerja sama dengan baik sebagai wakil ketua, tapi ternyata kelas 7B adalah tim yang kompak. Setiap kenangan bersama kalian sangat berharga. Mari kita pertahankan kebersamaan ini meski nanti sudah berbeda kelas!</p>
+                <div class="message-author">
+                    <img src="https://img1.pixhost.to/images/6572/612298900_skyzo.jpg" alt="Wakil Ketua Kelas">
+                    <div class="author-info">
+                        <h4>Wakil Ketua Kelas</h4>
+                        <p>Kelas 7B</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simplified Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="section-title">
+            <h2>Info Kontak</h2>
+            <p>Untuk kenangan yang tak terlupakan</p>
+        </div>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Kontak Kelas</h3>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-school"></i>
+                    </div>
+                    <div class="info-content">
+                        <h4>Sekolah</h4>
+                        <p>MTs NEGERI 1 LAMPUNG TENGAH</p>
+                        <p>Jl. Negara No.712, Yukum Jaya, Kec. Terbanggi Besar, Kabupaten Lampung Tengah, Lampung 34163</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="info-content">
+                        <h4>Wali Kelas</h4>
+                        <p>Bu Reza Febriantika</p>
+                        <p>Guru MTs Negeri 1 Lampung Tengah</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-hashtag"></i>
+                    </div>
+                    <div class="info-content">
+                        <h4>Tagar Kenangan</h4>
+                        <p>#Kelas7B2024</p>
+                        <p>#Kenangan7B</p>
+                        <p>#7BMtsnesalate</p>
+                        <p>#7B.2024/2025</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">Kelas 7B</div>
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#about">Tentang</a>
+                <a href="#gallery">Galeri</a>
+                <a href="#students">Anggota</a>
+                <a href="#memories">Kenangan</a>
+                <a href="#messages">Pesan</a>
+            </div>
+            <div class="social-icons">
+                <a href="https://www.instagram.com/cl7b.mtsnesa" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
+            <div class="creator-info">
+                <span>CREATOR - RIZKY</span>
+                <a href="https://instagram.com/air_minerall7" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+            <div class="copyright">
+                &copy; 2025 Kenangan Kelas 7B. Seluruh hak cipta dilindungi.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // Daftar nama hari
+        const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+
+        // Update hari dan tanggal secara real-time
+        function updateDateTime() {
+            const now = new Date();
+            
+            // Dapatkan hari
+            const dayName = days[now.getDay()];
+            document.getElementById('current-day').textContent = dayName;
+            
+            // Format tanggal: DD/MM/YYYY
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+            document.getElementById('current-date').textContent = `${day}/${month}/${year}`;
+        }
+        
+        // Update setiap detik
+        setInterval(updateDateTime, 1000);
+        updateDateTime(); // Panggil sekali saat pertama kali load
+        
+        // Battery Indicator
+        function updateBattery() {
+            if ('getBattery' in navigator) {
+                navigator.getBattery().then(function(battery) {
+                    updateBatteryUI(battery.level * 100);
+                    
+                    battery.addEventListener('levelchange', () => {
+                        updateBatteryUI(battery.level * 100);
+                    });
+                });
+            } else {
+                // Simulasi untuk browser yang tidak support
+                let simulatedLevel = 85;
+                updateBatteryUI(simulatedLevel);
+                
+                setInterval(() => {
+                    simulatedLevel -= 1;
+                    if (simulatedLevel < 10) simulatedLevel = 100;
+                    updateBatteryUI(simulatedLevel);
+                }, 60000); // Turun 1% setiap 1 menit
+            }
+        }
+        
+        function updateBatteryUI(level) {
+            const batteryLevel = document.getElementById('battery-level');
+            const batteryPercent = document.getElementById('battery-percent');
+            
+            batteryLevel.style.width = level + '%';
+            batteryPercent.textContent = Math.round(level) + '%';
+            
+            if (level <= 20) {
+                batteryLevel.style.background = '#f72585';
+            } else if (level <= 50) {
+                batteryLevel.style.background = '#ffbe0b';
+            } else {
+                batteryLevel.style.background = 'white';
+            }
+        }
+        
+        // Preloader
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.querySelector('.preloader').classList.add('fade-out');
+                setTimeout(function() {
+                    document.querySelector('.preloader').style.display = 'none';
+                }, 500);
+            }, 1500);
+        });
+        
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+                document.body.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+                document.body.classList.remove('scrolled');
+            }
+            
+            // Back to top button
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.scrollY > 300) {
+                backToTop.classList.add('active');
+            } else {
+                backToTop.classList.remove('active');
+            }
+        });
+        
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Close mobile menu if open
+                document.querySelector('.nav-links').classList.remove('active');
+            });
+        });
+        
+        // Back to top
+        document.querySelector('.back-to-top').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Mobile Menu Toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+        
+        // Animation on Scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.memory-item, .gallery-item, .message-card, .about-image, .about-text, .stat-item');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.2;
+                
+                if (elementPosition < screenPosition) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        }
+        
+        // Set initial state for animated elements
+        document.querySelectorAll('.memory-item, .gallery-item, .message-card, .about-image, .about-text, .stat-item').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(30px)';
+            element.style.transition = 'all 0.6s ease';
+        });
+        
+        // Update battery indicator
+        updateBattery();
+        
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+    </script>
+</body>
+</html>
