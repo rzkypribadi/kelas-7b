@@ -1138,6 +1138,128 @@
                 top: 25px;
             }
         }
+
+        /* Music Player Styles - Matching the back-to-top button */
+        .music-player-container {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .music-toggle-btn {
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+        }
+        
+        .music-toggle-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(247, 37, 133, 0.4);
+            background: var(--primary);
+        }
+        
+        .playlist-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+            transform: scaleY(0);
+            transform-origin: bottom;
+            opacity: 0;
+            transition: all 0.3s ease;
+            width: 300px;
+            position: absolute;
+            bottom: 70px;
+            left: 0;
+        }
+        
+        .playlist-container.show {
+            transform: scaleY(1);
+            opacity: 1;
+        }
+        
+        .playlist-header {
+            text-align: center;
+            margin-bottom: 15px;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .playlist-instruction {
+            font-size: 0.8rem;
+            color: var(--text);
+            text-align: center;
+            margin-bottom: 15px;
+            font-style: italic;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .playlist-item {
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(67, 97, 238, 0.05);
+            border-left: 3px solid var(--primary);
+        }
+        
+        .playlist-item:hover {
+            background: rgba(67, 97, 238, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .playlist-item.active {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .playlist-item .song-title {
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+        
+        .playlist-item .song-artist {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        
+        .audio-player {
+            display: none;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .music-player-container {
+                left: 15px;
+                bottom: 20px;
+            }
+            
+            .playlist-container {
+                width: 280px;
+                max-height: 300px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1520,6 +1642,60 @@
         <i class="fas fa-arrow-up"></i>
     </div>
 
+    <!-- Music Player -->
+    <div class="music-player-container">
+        <div class="playlist-container" id="playlist">
+            <div class="playlist-header">Daftar Putar Kelas 7B</div>
+            <div class="playlist-instruction">Klik judul lagu untuk memulai</div>
+            <div class="playlist-item" data-src="https://files.catbox.moe/3sv7ab.mp3">
+                <div class="song-title">Mangu</div>
+                <div class="song-artist">Fourtwnty</div>
+            </div>
+            <div class="playlist-item" data-src="https://files.catbox.moe/6p4fa1.mp3">
+                <div class="song-title">dan...</div>
+                <div class="song-artist">Sheila On 7</div>
+            </div>
+            <div class="playlist-item" data-src="https://files.catbox.moe/tne3dx.mp3">
+                <div class="song-title">Fix You</div>
+                <div class="song-artist">Coldplay</div>
+            </div>
+            <div class="playlist-item" data-src="https://files.catbox.moe/1kv3gg.mp3">
+                <div class="song-title">Nina</div>
+                <div class="song-artist">Feast</div>
+            </div>
+            <div class="playlist-item" data-src="https://files.catbox.moe/66eahr.mp3">
+                <div class="song-title">seluruh nafas ini</div>
+                <div class="song-artist">last child</div>
+            </div>
+            <div class="playlist-item" data-src="https://files.catbox.moe/2e3mp5.mp3">
+                <div class="song-title">secukupnya</div>
+                <div class="song-artist">Hindia</div>
+            </div>
+            <div class="playlist-item" data-src="https://files.catbox.moe/v2sx4p.mp3">
+                <div class="song-title">duka</div>
+                <div class="song-artist">last child</div>
+            </div>
+            <div class="playlist-item" data-src="https://files.catbox.moe/smerhq.mp3">
+                <div class="song-title">rumah ke rumah</div>
+                <div class="song-artist">Hindia</div>
+            </div>
+            <div class="playlist-item" data-src="https://files.catbox.moe/tnnw0g.mp3">
+                <div class="song-title">yellow</div>
+                <div class="song-artist">Coldplay</div>
+            </div>
+            <div class="playlist-item" data-src="https://files.catbox.moe/5fq5ii.mp3">
+                <div class="song-title">kembali pulang</div>
+                <div class="song-artist">Suara Kayu</div>
+            </div>
+        </div>
+        
+        <button class="music-toggle-btn" id="musicToggle">
+            <i class="fas fa-music"></i>
+        </button>
+        
+        <audio class="audio-player" id="audioPlayer" controls></audio>
+    </div>
+
     <script>
         // Daftar nama hari
         const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
@@ -1661,6 +1837,82 @@
             element.style.transition = 'all 0.6s ease';
         });
         
+        // Music Player Functionality
+        const musicToggle = document.getElementById('musicToggle');
+        const playlist = document.getElementById('playlist');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const playlistItems = document.querySelectorAll('.playlist-item');
+        let currentPlaying = null;
+        
+        // Toggle playlist visibility
+        musicToggle.addEventListener('click', function() {
+            playlist.classList.toggle('show');
+            
+            // Change icon based on playlist visibility
+            if (playlist.classList.contains('show')) {
+                this.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                this.innerHTML = '<i class="fas fa-music"></i>';
+            }
+        });
+        
+        // Play selected song
+        playlistItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const songSrc = this.getAttribute('data-src');
+                
+                // Pause current song if playing
+                if (currentPlaying) {
+                    currentPlaying.classList.remove('active');
+                    audioPlayer.pause();
+                }
+                
+                // Play new song
+                if (audioPlayer.src !== songSrc) {
+                    audioPlayer.src = songSrc;
+                    audioPlayer.play();
+                    this.classList.add('active');
+                    currentPlaying = this;
+                    
+                    // Change button icon to indicate playing
+                    musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
+                } else {
+                    // Toggle play/pause if same song clicked
+                    if (audioPlayer.paused) {
+                        audioPlayer.play();
+                        this.classList.add('active');
+                        musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
+                    } else {
+                        audioPlayer.pause();
+                        this.classList.remove('active');
+                        musicToggle.innerHTML = '<i class="fas fa-music"></i>';
+                    }
+                }
+            });
+        });
+        
+        // Update button when song ends
+        audioPlayer.addEventListener('ended', function() {
+            if (currentPlaying) {
+                currentPlaying.classList.remove('active');
+            }
+            musicToggle.innerHTML = '<i class="fas fa-music"></i>';
+        });
+        
+        // Update button when paused
+        audioPlayer.addEventListener('pause', function() {
+            if (currentPlaying && audioPlayer.src && !audioPlayer.ended) {
+                musicToggle.innerHTML = '<i class="fas fa-play"></i>';
+            } else {
+                musicToggle.innerHTML = '<i class="fas fa-music"></i>';
+            }
+        });
+        
+        // Update button when playing
+        audioPlayer.addEventListener('play', function() {
+            musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
+        });
+
         // Update battery indicator
         updateBattery();
         
